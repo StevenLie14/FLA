@@ -81,25 +81,19 @@ public class RestoFacade {
 	        System.out.println("2. Upgrade Business");
 	        System.out.println("3. Close Business");
 	        System.out.print("Input [1..3] : ");
-	        scanf.next();
-	        String input = scanf.nextLine();
-	        try {
-	        choice = Integer.parseInt(input);
-		        switch (choice) {
-		            case 1:
-		                ToogleGame();
-		                break;
-		            case 2:
-		                UpgradeMenu();
-		                break;
-		            case 3:
-		                break;
-		            default:
-		                System.out.println("Invalid choice. Please enter a valid option.");
-		                break;
-		        }
-		    } catch (NumberFormatException e) {
-	            System.out.println("Invalid input. Please enter a number.");
+	        choice = scanf.nextInt();
+	        switch (choice) {
+	            case 1:
+	                ToogleGame();
+	                break;
+	            case 2:
+	                UpgradeMenu();
+	                break;
+	            case 3:
+	                break;
+	            default:
+	                System.out.println("Invalid choice. Please enter a valid option.");
+	                break;
 	        }
 	    } while (choice != 3 && choice != 1);
 	}
@@ -186,7 +180,6 @@ public class RestoFacade {
 					restoname = scanf.nextLine();
 				} while (restoname.length() <3 || restoname.length() > 15);
 				Restaurant.getInstance().setObserver(gen);
-//				System.out.println(Restaurant.getInstance().getObserver());
 				Restaurant.getInstance().setMediator(mediator);
 				initPerson();
 				new Thread(new Game()).start();

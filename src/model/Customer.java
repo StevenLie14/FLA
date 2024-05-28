@@ -1,7 +1,6 @@
 package model;
 
 import customerstate.CustomerState;
-import customerstate.DoneState;
 import customerstate.EatState;
 import customerstate.OrderState;
 import customerstate.WaitingCookFoodState;
@@ -21,21 +20,13 @@ public class Customer extends Person{
 	private WaitingOrderSentState callchef;
 	private WaitingCookFoodState chefcooking;
 	private WaitingWaiterFoodState waiterfood;
-	private DoneState done;
 
 	
 
 
 
-	public DoneState getDone() {
-		return done;
-	}
 
 
-
-	public void setDone(DoneState done) {
-		this.done = done;
-	}
 
 
 
@@ -49,7 +40,6 @@ public class Customer extends Person{
 		this.callchef = new WaitingOrderSentState(this);
 		this.chefcooking = new WaitingCookFoodState(this);
 		this.waiterfood = new WaitingWaiterFoodState(this);
-		this.done = new DoneState(this);
 	}
 
 	
@@ -72,32 +62,9 @@ public class Customer extends Person{
 
 
 
-	public void setEat(EatState eat) {
-		this.eat = eat;
-	}
-
-
 
 	public OrderState getOrdering() {
 		return ordering;
-	}
-
-
-
-	public void setOrdering(OrderState ordering) {
-		this.ordering = ordering;
-	}
-
-
-
-	public WaitingOrderState getCallwaiter() {
-		return callwaiter;
-	}
-
-
-
-	public void setCallwaiter(WaitingOrderState callwaiter) {
-		this.callwaiter = callwaiter;
 	}
 
 
@@ -108,9 +75,6 @@ public class Customer extends Person{
 
 
 
-	public void setCallchef(WaitingOrderSentState callchef) {
-		this.callchef = callchef;
-	}
 
 
 
@@ -120,9 +84,6 @@ public class Customer extends Person{
 
 
 
-	public void setChefcooking(WaitingCookFoodState chefcooking) {
-		this.chefcooking = chefcooking;
-	}
 
 
 
@@ -132,9 +93,6 @@ public class Customer extends Person{
 
 
 
-	public void setWaiterfood(WaitingWaiterFoodState waiterfood) {
-		this.waiterfood = waiterfood;
-	}
 
 
 

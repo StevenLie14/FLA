@@ -46,7 +46,6 @@ public class Cook  extends Person{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(RestoFacade.getInstance().isPaused());
 			if(!RestoFacade.getInstance().isPaused()) {
 				this.state.updateState();
 			}

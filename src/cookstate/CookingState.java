@@ -41,12 +41,9 @@ public class CookingState extends CookState{
 			Thread.sleep(6000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			Thread.currentThread().interrupt();
+			e.printStackTrace();
 		}
 		if(this.getCook().getState() instanceof CookingState) {
-//			for (int i = 0; i < 100; i++) {
-//				System.out.println("DONE COOKING");
-//			}
 			this.getCook().changeState(this.getCook().getDone().setCustomer(this.getCustomer()));
 		}
 	

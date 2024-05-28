@@ -16,7 +16,6 @@ public class Game implements Runnable{
 		while(!RestoFacade.getInstance().isEnded()) {
 				RestoFacade.getInstance().GameStart();
 		}
-//		RestoFacade.getInstance().handleUserInput();
 	}
 
 }

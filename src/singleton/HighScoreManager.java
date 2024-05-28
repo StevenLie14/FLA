@@ -1,21 +1,24 @@
 package singleton;
 
+import model.HighScore;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
-import model.Restaurant;
+public class HighScoreManager {
 
-public class HighScore {
-
-	private static HighScore instance = null;
+	private static HighScoreManager instance = null;
 	public Scanner scanf = new Scanner (System.in);
 	
-	public static HighScore getInstance() {
+	public static HighScoreManager getInstance() {
 		if(instance == null) {
-			instance = new HighScore();
+			instance = new HighScoreManager();
 		}
 		return instance;
 	}
@@ -39,6 +42,7 @@ public class HighScore {
 		try {
 			File file = new File("src/assets/highscore.txt");
 			Scanner fscanf = new Scanner(file);
+			ArrayList<HighScore> highScores = new ArrayList<>();
 			int i = 1;
 			System.out.println();
 			System.out.printf("| %40s | %-7s | %35s %n"," ","HIGHSCORE", "");
@@ -46,17 +50,26 @@ public class HighScore {
 			printEquals(100);
 			System.out.printf("| %30s %5s %-20s %8s %35s %n"," ","Rank","Restaurant's name","Score", "");
 			printHyphens(100);
-			while (fscanf.hasNextLine() && i <11) {
+			while (fscanf.hasNextLine()) {
 				String data = fscanf.nextLine();
-				String restoname = data.split("#")[0];
-				String score = data.split("#")[1];
-				if(currname == restoname) {
-					System.out.printf("| %-20s %3s %7s %5s %-20s %8s %7s %3s %25s %n"," ",">>>"," ",i,restoname,score, " ","<<<"," ");
-					
-				}else {
-					System.out.printf("| %30s %5s %-20s %8s %35s %n"," ",i,restoname,score, "");
-				}
+				String[] parts = data.split("#");
+				String restaurantName = parts[0];
+				int score = Integer.parseInt(parts[1]);
+				highScores.add(new HighScore(restaurantName, score));
 			}
+			Collections.sort(highScores, Comparator.comparingInt(HighScore::getScore).reversed());
+			for (HighScore score : highScores) {
+				if(currname.equals(score.getRestoname())) {
+					System.out.printf("| %-20s %3s %7s %3s %-20s %8s %7s %3s %25s %n"," ",">>>"," ",i,score.getRestoname(),score.getScore(), " ","<<<"," ");
+
+				}else {
+					System.out.printf("| %30s %5s %-20s %8s %35s %n"," ",i,score.getRestoname(),score.getScore(), "");
+				}
+				i++;
+				if(i == 11) break;
+			}
+
+			i++;
 			System.out.println();
 			System.out.println();
 			System.out.println();
@@ -69,9 +82,12 @@ public class HighScore {
 	}
 	
 	public void ReadFile() {
+
 		try {
+
 			File file = new File("src/assets/highscore.txt");
 			Scanner fscanf = new Scanner(file);
+			ArrayList<HighScore> highScores = new ArrayList<>();
 			int i = 1;
 			System.out.println();
 			System.out.printf("| %40s | %-7s | %35s %n"," ","HIGHSCORE", "");
@@ -79,12 +95,19 @@ public class HighScore {
 			printEquals(100);
 			System.out.printf("| %30s %5s %-20s %8s %35s %n"," ","Rank","Restaurant's name","Score", "");
 			printHyphens(100);
-			while (fscanf.hasNextLine() && i <11) {
+			while (fscanf.hasNextLine()) {
 				String data = fscanf.nextLine();
-				String restoname = data.split("#")[0];
-				String score = data.split("#")[1];
+				String[] parts = data.split("#");
+				String restaurantName = parts[0];
+				int score = Integer.parseInt(parts[1]);
+				highScores.add(new HighScore(restaurantName, score));
 				
-				System.out.printf("| %30s %5s %-20s %8s %35s %n"," ",i,restoname,score, "");
+			}
+			Collections.sort(highScores, Comparator.comparingInt(HighScore::getScore).reversed());
+			for (HighScore score : highScores) {
+				System.out.printf("| %30s %5s %-20s %8s %35s %n", " ", i, score.getRestoname(), score.getScore(), "");
+				i++;
+				if(i == 11) break;
 			}
 			System.out.println();
 			System.out.println();
@@ -99,15 +122,10 @@ public class HighScore {
 	
 	public void WriteFile(String restoname,Integer score) {
 		try {
-		//1. Kita perlu path menuju file
 		String path = "src/assets/highscore.txt";
 		FileWriter fw = new FileWriter(path,true);
-		//True = append, False = write in C
-		//Tujuan : tulis file
 		BufferedWriter bw = new BufferedWriter(fw);
-		//Tujuan : untuk menulis file dalam buffer tertentu.
 		PrintWriter pw = new PrintWriter(bw);
-		//Tujuan : bisa menggunakan println() dalam file writer.
 		pw.printf("%s#%s\n",restoname,score);
 		pw.close();
 		System.out.println("Restaurant Save Successfully");
@@ -115,6 +133,8 @@ public class HighScore {
 			e.printStackTrace();
 		}
 	}
+
+
 	
 	
 

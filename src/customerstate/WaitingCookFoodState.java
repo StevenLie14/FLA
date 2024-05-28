@@ -33,7 +33,7 @@ public class WaitingCookFoodState extends CustomerState{
 		// TODO Auto-generated method stub
 		try {
 			Thread.sleep(4000);
-			if(this.getCustomer().getState() instanceof WaitingCookFoodState == true) {
+			if(this.getCustomer().getState() instanceof WaitingCookFoodState) {
 				if(this.getCustomer().getTolerance() <= 1) {
 					Restaurant.getInstance().setScore(Restaurant.getInstance().getScore() -300);
 					this.getCustomer().getMediator().removeUser(this.getCustomer());

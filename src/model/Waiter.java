@@ -93,7 +93,6 @@ public class Waiter extends Person {
 	
 	public void changeState(WaiterState state) {
 		this.state = state;
-//		this.state.startState();
 	}
 	
 	public void setState(WaiterState state) {

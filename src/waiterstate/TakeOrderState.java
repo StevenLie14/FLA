@@ -21,7 +21,7 @@ public class TakeOrderState extends WaiterState{
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			Thread.currentThread().interrupt();
+			e.printStackTrace();
 		}
 	}
 

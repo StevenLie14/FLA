@@ -48,7 +48,7 @@ public class ServingFoodState extends WaiterState{
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			Thread.currentThread().interrupt();
+			e.printStackTrace();
 		}
 		this.getWaiter().getMediator().serveOrder(getWaiter(), customer,cook);
 		

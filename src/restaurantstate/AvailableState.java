@@ -18,7 +18,6 @@ public class AvailableState extends RestaurantState {
 	public void updateState() {
 		Random random = new Random();
 		int chance = random.nextInt(100);
-//		System.out.println(chance);
         if (chance < 25) {
         	Restaurant.getInstance().notifyObserver();
         }

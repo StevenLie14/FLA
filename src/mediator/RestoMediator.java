@@ -44,10 +44,6 @@ public class RestoMediator {
 
 
 
-	public  Vector<Customer> getCustomers() {
-		return customers;
-	}
-
 	public  Vector<Waiter> gamegetWaiters() {
 		return waiters;
 	}
@@ -104,36 +100,7 @@ public class RestoMediator {
 		return initial;
 	}
 
-//	 public synchronized void takeOrderCustomer(Waiter waiter) {
-//		  Customer selectedCustomer = null;
-//		   synchronized (customers) {
-//			   for (Customer cust : customers) {
-//
-//				    if (cust.getState() instanceof WaitingOrderState) {
-//					     selectedCustomer = cust;
-//					     break;
-//				    }
-//			   }
-//		  }
-//
-//		  if(selectedCustomer != null) {
-//			   selectedCustomer.changeState(selectedCustomer.getOrdering().setWaiter(waiter));
-//			   waiter.changeState(waiter.getTake().setCustomer(selectedCustomer));
-//			   return;
-//		  }
-//
-//
-//
-//
-//
-//
-//
-//		  return;
-//	}
-
-//	----------------------------------------------------------------------------------------------
-
-	public void customerFindWaiter(Customer customer) {
+	public synchronized void customerFindWaiter(Customer customer) {
 		synchronized (waiters) {
 
 			for (Waiter waiter : waiters) {
@@ -146,12 +113,12 @@ public class RestoMediator {
 		}
 	}
 
-	public void bringOrdertoChef(Waiter waiter,Customer customer) {
+	public synchronized void bringOrdertoChef(Waiter waiter,Customer customer) {
 		waiter.changeState(waiter.getBring().setCustomer(customer));
 		customer.changeState(customer.getCallchef().setWaiter(waiter));
 	}
 
-	public void waiterFindCook(Waiter waiter) {
+	public synchronized void waiterFindCook(Waiter waiter) {
 		synchronized (cooks) {
 			   for (Cook cook : cooks) {
 				    if (cook.getState() instanceof DoneState && waiter.getState() instanceof waiterstate.IdleState) {
@@ -159,13 +126,13 @@ public class RestoMediator {
 					     serveCustomer.changeState(serveCustomer.getWaiterfood().setWaiter(waiter));
 						  waiter.changeState(waiter.getServe().setCustomer(serveCustomer).setCook(cook));
 						  cook.changeState(cook.getIdle());
-						  break;
+						  return;
 				    }
 			   }
 		  }
 	}
 
-	public void waiterBringFood(Waiter waiter,Customer customer) {
+	public synchronized void waiterBringFood(Waiter waiter,Customer customer) {
 		Cook idlecook = null;
 
 		synchronized (cooks) {
@@ -199,7 +166,7 @@ public class RestoMediator {
 		}
 	}
 
-	public void serveOrder(Waiter waiter,Customer customer,Cook cook) {
+	public synchronized void serveOrder(Waiter waiter,Customer customer,Cook cook) {
 		waiter.changeState(waiter.getIdle());
 		customer.setState(customer.getEat().setCook(cook));
 	}
@@ -209,12 +176,12 @@ public class RestoMediator {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-//		for(int i = 0;i<100;i++) {
-//			System.out.println("WOOEEOEDASHASHDSAH");
-//		}
-//		customer.changeState(customer.getDone());
+
+		Restaurant.getInstance().setScore(Restaurant.getInstance().getScore() + cook.getSkill()*30);
+		Restaurant.getInstance().setMoney(Restaurant.getInstance().getMoney() + cook.getSkill()*30);
 		removeUser(customer);
 
 	}

@@ -26,7 +26,7 @@ public class WaitingOrderSentState extends CustomerState {
 	public void updateState() {
 		try {
 			Thread.sleep(4000);
-			if(this.getCustomer().getState() instanceof WaitingOrderSentState == true) {
+			if(this.getCustomer().getState() instanceof WaitingOrderSentState) {
 				if(this.getCustomer().getTolerance() <= 1) {
 					Restaurant.getInstance().setScore(Restaurant.getInstance().getScore() -300);
 					this.getCustomer().getMediator().removeUser(this.getCustomer());

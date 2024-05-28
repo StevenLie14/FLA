@@ -22,8 +22,7 @@ public class OrderState extends CookState{
 
 	@Override
 	public void updateState() {
-		
-//		System.out.println("Order");
+
 	}
 
 	

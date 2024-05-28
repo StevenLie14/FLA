@@ -29,7 +29,6 @@ public class WaitCookState extends WaiterState{
 
 	@Override
 	public void updateState() {
-//		System.out.println("wait cook " + this.getCustomer());
 		this.getWaiter().getMediator().waiterBringFood(this.getWaiter(), this.getCustomer());
 		
 	}

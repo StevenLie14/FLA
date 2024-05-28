@@ -30,7 +30,7 @@ public class WaitCookState extends WaiterState{
 	@Override
 	public void updateState() {
 //		System.out.println("wait cook " + this.getCustomer());
-		this.getWaiter().getMediator().getCooker(this.getWaiter(), this.getCustomer());
+		this.getWaiter().getMediator().waiterBringFood(this.getWaiter(), this.getCustomer());
 		
 	}
 
@@ -40,11 +40,6 @@ public class WaitCookState extends WaiterState{
 
 
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 
 }

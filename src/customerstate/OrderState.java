@@ -23,7 +23,10 @@ public class OrderState extends CustomerState {
 		return this;
 	}
 
-
+	
+	public String getState() {
+		return "order <" + this.getWaiter().getName() + ">";
+	}
 
 	@Override
 	public void updateState() {
@@ -31,16 +34,7 @@ public class OrderState extends CustomerState {
 		
 	}
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	public String getState() {
-		return "order <" + this.getWaiter().getName() + ">";
-	}
-
 	
 
 }

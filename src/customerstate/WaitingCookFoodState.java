@@ -7,13 +7,13 @@ import model.Restaurant;
 public class WaitingCookFoodState extends CustomerState{
 
 	private Cook cook;
-	
+
 	public WaitingCookFoodState(Customer customer) {
 		super(customer);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+
 
 	public Cook getCook() {
 		return cook;
@@ -32,11 +32,12 @@ public class WaitingCookFoodState extends CustomerState{
 	public void updateState() {
 		// TODO Auto-generated method stub
 		try {
-			Thread.sleep(4000);	
+			Thread.sleep(4000);
 			if(this.getCustomer().getState() instanceof WaitingCookFoodState == true) {
 				if(this.getCustomer().getTolerance() <= 1) {
 					Restaurant.getInstance().setScore(Restaurant.getInstance().getScore() -300);
 					this.getCustomer().getMediator().removeUser(this.getCustomer());
+					this.getCook().changeState(this.getCook().getIdle());
 					return;
 				}
 				this.getCustomer().setTolerance(this.getCustomer().getTolerance() - 1);
@@ -49,16 +50,15 @@ public class WaitingCookFoodState extends CustomerState{
 
 
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 	public String getState() {
 		return "wait food <" + this.getCook().getName() + ">";
 	}
 
-	
+
+
+
+
+
 
 }

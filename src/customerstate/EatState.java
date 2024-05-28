@@ -19,32 +19,35 @@ public class EatState extends CustomerState{
 
 	public EatState(Customer customer) {
 		super(customer);
+		
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void updateState() {
+		this.getCustomer().getMediator().goDie(getCustomer(), getCook());
 		// TODO Auto-generated method stub
-		
+//				try {
+////
+////					synchronized (this.getCustomer()) {
+////		                System.out.println("Changing state to Done and adding points...");
+////		                this.getCustomer().getMediator().addPoint(cook.getSkill() * 30);
+////		                System.out.println("State changed and points added.");
+////		            }
+////					System.out.println("s" + cook);
+////					System.out.println("m" + this.getCustomer().getMediator());
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 	}
 
-	@Override
-	public void startState() {
-		try {
-			Thread.sleep(6000);	
-//			System.out.println("s" + cook);
-//			System.out.println("m" + this.getCustomer().getMediator());
-			this.getCustomer().getMediator().addPoint(cook.getSkill()*30);
-			this.getCustomer().getMediator().removeUser(this.getCustomer());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public String getState() {
 		return "eat";
 	}
+
 
 	
 }

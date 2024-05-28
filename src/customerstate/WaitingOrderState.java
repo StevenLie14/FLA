@@ -11,15 +11,15 @@ public class WaitingOrderState extends CustomerState {
 
 	@Override
 	public void updateState() {
-		
+		this.getCustomer().getMediator().customerFindWaiter(getCustomer());;
 		try {
-			Thread.sleep(2000);	
+			Thread.sleep(2000);
 			if(this.getCustomer().getState() instanceof WaitingOrderState == true) {
 				if(this.getCustomer().getTolerance() <= 1) {
 					Restaurant.getInstance().setScore(Restaurant.getInstance().getScore() -300);
 					this.getCustomer().getMediator().removeUser(this.getCustomer());
 					return;
-					
+
 				}
 				this.getCustomer().setTolerance(this.getCustomer().getTolerance() - 1);
 			}
@@ -29,16 +29,14 @@ public class WaitingOrderState extends CustomerState {
 		}
 	}
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
+
 	public String getState() {
 		return "order";
 	}
 
-	
+
+
+
 
 }

@@ -1,8 +1,7 @@
 package facade;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 import builder.FactoryBuilder;
 import factory.CookFactory;
@@ -25,12 +24,26 @@ public class RestoFacade {
 	private String restoname;
 	private boolean isPaused;
 	private boolean isEnded;
+	private Scanner scanf;
 	
-	public void ToogleGame() {
-		this.isPaused = !isPaused;
+	public synchronized void PauseGame() {
+		RestoFacade.getInstance().isPaused = true;
 	}
 	
-	public void EndGame () {
+	public synchronized void ResumeGame() {
+		RestoFacade.getInstance().setPaused(false);
+//		this.handleUserInput();
+	}
+	
+	public synchronized void setPaused(boolean isPaused) {
+		this.isPaused = isPaused;
+	}
+
+	public synchronized void setEnded(boolean isEnded) {
+		this.isEnded = isEnded;
+	}
+
+	public synchronized void EndGame () {
 		isEnded = false;
 	}
 	
@@ -50,6 +63,7 @@ public class RestoFacade {
 		super();
 		this.mediator = new RestoMediator();
 		this.gen = new CustomerGenerator(mediator);
+		this.scanf = new Scanner(System.in);
 		this.isEnded = false;
 		this.isPaused= false;
 	}
@@ -73,7 +87,6 @@ public class RestoFacade {
 	}
 
 	public void PauseMenu() {
-		Scanner scanf = new Scanner(System.in);;
 	    int choice = 0;
 	    do {
 	        choice = 0;
@@ -84,12 +97,15 @@ public class RestoFacade {
 	        choice = scanf.nextInt();
 	        switch (choice) {
 	            case 1:
-	                ToogleGame();
+	            	ResumeGame();
 	                break;
 	            case 2:
 	                UpgradeMenu();
 	                break;
 	            case 3:
+	            	HighScore.getInstance().WriteFile(restoname, Restaurant.getInstance().getScore());
+	            	HighScore.getInstance().ReadFile(restoname);
+	            	setEnded(true);
 	                break;
 	            default:
 	                System.out.println("Invalid choice. Please enter a valid option.");
@@ -102,9 +118,7 @@ public class RestoFacade {
 	
 	public void GameStart() {
 		while(!RestoFacade.getInstance().isEnded) {
-			
 			if(!isPaused) {
-				
 				System.out.printf("%50s",this.restoname);
 				RestoStatus();
 				HighScore.getInstance().printEquals(90);
@@ -119,9 +133,14 @@ public class RestoFacade {
 					System.out.println(a.getName()+ " " + a.getState().getState());
 				}
 				System.out.println("Customers");
+
 				for (Customer a : this.mediator.gamegetCustomers()) {
-					System.out.println(a.getName()+" " +a.getState().getState());
+//					if(!a.isEnd()) {
+						
+						System.out.println(a.getName()+" " +a.getState().getState());
+//					}
 				}
+				
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -139,16 +158,15 @@ public class RestoFacade {
 	
 	public void handleUserInput() {
        
-        Scanner scanner = new Scanner(System.in);
-        try {
-            while (!this.isPaused) {
-                String input = scanner.nextLine();
-                if (input.isEmpty()) {
-                    ToogleGame();
-                }
-            }
-        } finally {
-            scanner.close();
+        while(!this.isEnded) {
+        	while (!this.isPaused) {
+//        		System.out.println("dsaudsaiudsad");
+        		scanf.nextLine();
+//        		System.out.println("input : " + input);
+//        		if (input.isEmpty()) {
+        			PauseGame();
+//        		}
+        	}
         }
     }
 	
@@ -159,11 +177,11 @@ public class RestoFacade {
 		System.out.printf("%20s %n","Size  : " + Restaurant.getInstance().getSeat());
 		System.out.printf("%20s %n","Available  : " + Restaurant.getInstance().getState().getState());
 		System.out.printf("%20s %n","Seat avail  : " + Restaurant.getInstance().getMediator().gamegetCustomers().size());
+		System.out.printf("%20s %n","Paused  : " + this.isPaused);
 		
 	}
 	
 	public void StartMenu() {
-		Scanner scanf = new Scanner(System.in);;
 		int choice = 0;
 		do {
 			choice = 0;
@@ -171,10 +189,11 @@ public class RestoFacade {
 			System.out.println("2. High Score");
 			System.out.println("3. Exit");
 			System.out.print("Input [1..3] : ");
-			choice = scanf.nextInt();
+			choice = scanf.nextInt();	
 			switch (choice) {
 			case 1:
 				scanf.nextLine();
+				
 				do {
 					System.out.print("Resto Name : ");
 					restoname = scanf.nextLine();
@@ -183,8 +202,8 @@ public class RestoFacade {
 				Restaurant.getInstance().setMediator(mediator);
 				initPerson();
 				new Thread(new Game()).start();
-//				new Thread(new Listener()).start();
-				this.handleUserInput();
+				new Thread(new Listener()).start();
+//				this.handleUserInput();
 				
 				break;
 			case 2:
@@ -210,7 +229,6 @@ public class RestoFacade {
 	
 
 	public void UpgradeMenu() {
-		Scanner scanf = new Scanner(System.in);;
 		int choice = 0;
 		do {
 			choice = 0;
@@ -257,7 +275,6 @@ public class RestoFacade {
 	}
 	
 	public void HireNewEmployee() {
-		Scanner scanf = new Scanner(System.in);;
 		int choice = 0;
 		do {
 			choice = 0;
@@ -298,8 +315,6 @@ public class RestoFacade {
 					}else {
 						System.out.println("Cooker reached maximal");
 					}
-					
-					
 				}else {
 					System.out.println("Money Not Enough");
 				}
@@ -311,9 +326,8 @@ public class RestoFacade {
 	
 	
 	public void UpgradeWaiter() {
-		Scanner scanf = new Scanner(System.in);;
 		int choice = -1;
-		ArrayList<Waiter> waiters = mediator.getWaiters();
+		Vector<Waiter> waiters = mediator.getWaiters();
 		do {
 			choice = 0;
 			
@@ -350,15 +364,14 @@ public class RestoFacade {
 	
 	public void cls() {
 		for(int i = 0;i<100;i++) {
-			System.out.println("");
+//			System.out.println("");
 		}
 	}
 	
 	public void UpgradeCooks() {
-		Scanner scanf = new Scanner(System.in);;
 		int choice = -1;
 		int upgchoice = -1;
-		ArrayList<Cook> cooks = mediator.getCooks();
+		Vector<Cook> cooks = mediator.getCooks();
 		do {
 			choice = 0;
 			
@@ -372,7 +385,7 @@ public class RestoFacade {
 			}
 			HighScore.getInstance().printHyphens(33);
 			System.out.print("Input employee's number to upgrade [0 to Exit] : ");
-			choice = scanf.nextInt();
+			scanf.next();
 			if(Restaurant.getInstance().getMoney() >= 150) {
 				if(choice > 0 && choice <= cooks.size()) {
 					upgchoice = -1;

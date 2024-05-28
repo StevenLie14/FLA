@@ -35,12 +35,18 @@ public class Cook  extends Person{
 	
 	public void changeState(CookState state) {
 		this.state = state;
-		this.state.startState();
 	}
 	
 	@Override
 	public void run() {
 		while(!RestoFacade.getInstance().isEnded()) {
+			try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(RestoFacade.getInstance().isPaused());
 			if(!RestoFacade.getInstance().isPaused()) {
 				this.state.updateState();
 			}

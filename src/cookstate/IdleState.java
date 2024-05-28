@@ -13,11 +13,7 @@ public class IdleState extends CookState {
 		
 	}
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public String getState() {

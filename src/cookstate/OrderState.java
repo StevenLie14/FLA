@@ -26,11 +26,7 @@ public class OrderState extends CookState{
 //		System.out.println("Order");
 	}
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public String getState() {

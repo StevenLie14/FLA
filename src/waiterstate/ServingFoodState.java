@@ -44,7 +44,13 @@ public class ServingFoodState extends WaiterState{
 
 	@Override
 	public void updateState() {
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			Thread.currentThread().interrupt();
+		}
+		this.getWaiter().getMediator().serveOrder(getWaiter(), customer,cook);
 		
 		
 	}
@@ -55,11 +61,7 @@ public class ServingFoodState extends WaiterState{
 
 
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		this.getWaiter().getMediator().serveOrder(getWaiter(), customer,cook);
-	}
+	
 	
 	
 

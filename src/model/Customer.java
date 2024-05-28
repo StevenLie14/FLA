@@ -1,6 +1,7 @@
 package model;
 
 import customerstate.CustomerState;
+import customerstate.DoneState;
 import customerstate.EatState;
 import customerstate.OrderState;
 import customerstate.WaitingCookFoodState;
@@ -20,6 +21,23 @@ public class Customer extends Person{
 	private WaitingOrderSentState callchef;
 	private WaitingCookFoodState chefcooking;
 	private WaitingWaiterFoodState waiterfood;
+	private DoneState done;
+
+	
+
+
+
+	public DoneState getDone() {
+		return done;
+	}
+
+
+
+	public void setDone(DoneState done) {
+		this.done = done;
+	}
+
+
 
 	public Customer(String name, Integer tolerance, RestoMediator mediator) {
 		super(name,mediator);
@@ -31,6 +49,7 @@ public class Customer extends Person{
 		this.callchef = new WaitingOrderSentState(this);
 		this.chefcooking = new WaitingCookFoodState(this);
 		this.waiterfood = new WaitingWaiterFoodState(this);
+		this.done = new DoneState(this);
 	}
 
 	
@@ -41,7 +60,6 @@ public class Customer extends Person{
 
 	public void changeState(CustomerState state) {
 		this.state = state;
-		this.state.startState();
 	}
 
 	public Integer getTolerance() {

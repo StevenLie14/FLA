@@ -20,7 +20,6 @@ public abstract class CustomerState {
 	}
 	
 	public abstract void updateState();
-	public abstract void startState();
 	public abstract String getState();
 
 }

@@ -14,7 +14,15 @@ public class TakeOrderState extends WaiterState{
 	@Override
 	public void updateState() {
 		// TODO Auto-generated method stub
-		
+		try {
+			Thread.sleep(6000 - this.getWaiter().getSpeed()*1000);
+			this.getWaiter().getMediator().bringOrdertoChef(getWaiter(), customer);
+			
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	public Customer getCustomer() {
@@ -30,18 +38,6 @@ public class TakeOrderState extends WaiterState{
 		return "take order <" + this.getCustomer().getName() + ">";
 	}
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		try {
-			Thread.sleep(6000 - this.getWaiter().getSpeed()*1000);
-			this.getWaiter().getMediator().bringOrdertoChef(getWaiter(), customer);
-			
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 }

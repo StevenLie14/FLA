@@ -19,10 +19,6 @@ public class FullState extends RestaurantState{
 		return "FULL";
 	}
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

@@ -18,7 +18,7 @@ public class IdleState extends WaiterState{
 //		}
 //		System.out.println(this.getWaiter().getName());
 //		if(this.getWaiter().getMediator().getCustomers().size() > 0) {
-			this.getWaiter().getMediator().takeOrderCustomer(this.getWaiter());
+			this.getWaiter().getMediator().waiterFindCook(getWaiter());
 //		}
 	}
 	
@@ -26,11 +26,7 @@ public class IdleState extends WaiterState{
 		return "idle";
 	}
 
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	
 

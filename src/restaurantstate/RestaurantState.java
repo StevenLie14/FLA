@@ -28,7 +28,6 @@ public abstract class RestaurantState {
 
 
 	public abstract void updateState();
-	public abstract void startState();
 	public abstract String getState();
 
 }

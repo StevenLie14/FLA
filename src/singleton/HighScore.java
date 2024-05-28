@@ -40,28 +40,28 @@ public class HighScore {
 			File file = new File("src/assets/highscore.txt");
 			Scanner fscanf = new Scanner(file);
 			int i = 1;
+			System.out.println();
+			System.out.printf("| %40s | %-7s | %35s %n"," ","HIGHSCORE", "");
+			System.out.println();
+			printEquals(100);
+			System.out.printf("| %30s %5s %-20s %8s %35s %n"," ","Rank","Restaurant's name","Score", "");
+			printHyphens(100);
 			while (fscanf.hasNextLine() && i <11) {
 				String data = fscanf.nextLine();
 				String restoname = data.split("#")[0];
 				String score = data.split("#")[1];
-				System.out.println();
-				System.out.printf("| %40s | %-7s | %35s %n"," ","HIGHSCORE", "");
-				System.out.println();
-				printEquals(100);
-				System.out.printf("| %30s %5s %-20s %8s %35s %n"," ","Rank","Restaurant's name","Score", "");
-				printHyphens(100);
 				if(currname == restoname) {
 					System.out.printf("| %-20s %3s %7s %5s %-20s %8s %7s %3s %25s %n"," ",">>>"," ",i,restoname,score, " ","<<<"," ");
 					
 				}else {
 					System.out.printf("| %30s %5s %-20s %8s %35s %n"," ",i,restoname,score, "");
 				}
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				System.out.println("Press Enter to Continue");
 			}
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println("Press Enter to Continue");
 			fscanf.close();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -73,16 +73,16 @@ public class HighScore {
 			File file = new File("src/assets/highscore.txt");
 			Scanner fscanf = new Scanner(file);
 			int i = 1;
+			System.out.println();
+			System.out.printf("| %40s | %-7s | %35s %n"," ","HIGHSCORE", "");
+			System.out.println();
+			printEquals(100);
+			System.out.printf("| %30s %5s %-20s %8s %35s %n"," ","Rank","Restaurant's name","Score", "");
+			printHyphens(100);
 			while (fscanf.hasNextLine() && i <11) {
 				String data = fscanf.nextLine();
 				String restoname = data.split("#")[0];
 				String score = data.split("#")[1];
-				System.out.println();
-				System.out.printf("| %40s | %-7s | %35s %n"," ","HIGHSCORE", "");
-				System.out.println();
-				printEquals(100);
-				System.out.printf("| %30s %5s %-20s %8s %35s %n"," ","Rank","Restaurant's name","Score", "");
-				printHyphens(100);
 				
 				System.out.printf("| %30s %5s %-20s %8s %35s %n"," ",i,restoname,score, "");
 			}
@@ -97,7 +97,7 @@ public class HighScore {
 		}
 	}
 	
-	public void WriteFile(String restoname,String score) {
+	public void WriteFile(String restoname,Integer score) {
 		try {
 		//1. Kita perlu path menuju file
 		String path = "src/assets/highscore.txt";

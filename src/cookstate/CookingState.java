@@ -37,20 +37,11 @@ public class CookingState extends CookState{
 	@Override
 	public void updateState() {
 //		System.out.println("??");
-		
-		
-	}
-
-
-
-	@Override
-	public void startState() {
-		// TODO Auto-generated method stub
 		try {
 			Thread.sleep(6000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 		if(this.getCook().getState() instanceof CookingState) {
 //			for (int i = 0; i < 100; i++) {
@@ -58,7 +49,13 @@ public class CookingState extends CookState{
 //			}
 			this.getCook().changeState(this.getCook().getDone().setCustomer(this.getCustomer()));
 		}
+	
+		
 	}
+
+
+
+
 
 
 

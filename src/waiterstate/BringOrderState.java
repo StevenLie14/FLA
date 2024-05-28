@@ -42,7 +42,6 @@ public class BringOrderState extends WaiterState{
 
 	public BringOrderState(Waiter waiter) {
 		super(waiter);
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -62,6 +61,7 @@ public class BringOrderState extends WaiterState{
 	@Override
 	public void updateState() {
 		
+		this.getWaiter().getMediator().waiterBringFood(this.getWaiter(), this.getCustomer());
 	}
 
 
@@ -73,12 +73,6 @@ public class BringOrderState extends WaiterState{
 
 
 
-	@Override
-	public void startState() {
-		this.getWaiter().getMediator().getCooker(this.getWaiter(), this.getCustomer());
-		// TODO Auto-generated method stub
-//		this.getWaiter().getMediator().waiterBringOrder(getWaiter(), customer, cook, type);;
-		
-	}
+	
 
 }

@@ -99,7 +99,6 @@ public class Restaurant implements Subject, Runnable{
 
 	public void setState(RestaurantState state) {
 		this.state = state;
-		this.state.startState();
 	}
 
 	public Integer getSeat() {
@@ -143,10 +142,13 @@ public class Restaurant implements Subject, Runnable{
 	@Override
 	public void run() {
 		while(!RestoFacade.getInstance().isEnded()) {
+
 			if(!RestoFacade.getInstance().isPaused()) {
+
 				try {
 					Thread.sleep(1000);
-					if(Restaurant.getInstance().getMediator().gamegetCustomers().size() < seat) {
+					int size = Restaurant.getInstance().getMediator().gamegetCustomers().size();
+					if(size < seat) {
 
 						Restaurant.getInstance().setState(Restaurant.getInstance().getAvail());
 					}else {
@@ -155,7 +157,7 @@ public class Restaurant implements Subject, Runnable{
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Thread.currentThread().interrupt();
 				}
 				Restaurant.getInstance().state.updateState();
 			}

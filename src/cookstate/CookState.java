@@ -20,7 +20,6 @@ public abstract class CookState {
 	}
 	
 	public abstract void updateState();
-	public abstract void startState();
 	public abstract String getState();
 	
 	

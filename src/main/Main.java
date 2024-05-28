@@ -3,9 +3,6 @@ package main;
 import java.util.Scanner;
 
 import facade.RestoFacade;
-import model.Cook;
-import model.Customer;
-import model.Waiter;
 
 public class Main {
 
